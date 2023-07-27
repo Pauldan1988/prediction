@@ -21,6 +21,7 @@ export default function Home() {
           type="text"
           placeholder="Type your name..."
           value={inputVal}
+          className="text-black"
           onChange={(e) => setInputVal(e.target.value)}
         />
         <button type="submit">Predict Data</button>
