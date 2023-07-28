@@ -17,24 +17,41 @@ interface Params {
   params: { name: string }
 }
 
-export default async function Page({params}: Params) {
+async function Prediction({ params }: Params) {
+  const nameData = params.name
   const ageData = getPredictedAge(params.name)
   const genderData = getPredictedGender(params.name)
   const countryData = getPredictedCountry(params.name)
 
-  const [age, gender, country] = await Promise.all(
-    [ageData, 
-    genderData,
-    countryData
-   ])
-    return (
-      <div>
-        <div>
-          <div> Personal Info</div>
-          <div> Age: {age?.age}</div>
-          <div> Gender: {gender?.gender}</div>
-          <div> Country: {country?.country[0]?.country_id}</div>
+  const [name, age, gender, country] = await Promise.all(
+    [nameData,
+      ageData,
+      genderData,
+      countryData
+    ])
+  return (
+    <body className="bg-slate-300">
+      <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3 p-4">
+        <div className="p-8">
+          <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+            Personal Info
+          </div>
+          <div className="block mt-1 text-lg leading-tight font-medium text-black">
+            Name: {name}
+          </div>
+          <div className="block mt-1 text-lg leading-tight font-medium text-black">
+            Age: {age?.age}
+          </div>
+          <div className="block mt-1 text-lg leading-tight font-medium text-black">
+            Gender: {gender?.gender}
+          </div>
+          <div className="block mt-1 text-lg leading-tight font-medium text-black">
+            Nationality: {country?.country[0]?.country_id}
+          </div>
         </div>
       </div>
-    )
-  }
+    </body>
+  );
+}
+
+export default Prediction;
